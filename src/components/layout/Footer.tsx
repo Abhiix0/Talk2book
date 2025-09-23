@@ -17,7 +17,7 @@ const Footer = () => {
               <span className="text-xl font-bold text-secondary-foreground">Talk2Book</span>
             </div>
             <p className="text-sm text-muted-foreground max-w-xs">
-              Revolutionary chatbot-powered museum ticketing system. Skip the queues, book instantly, and explore culture effortlessly.
+              AI-powered museum ticketing for the Heritage Museum. Skip the queues, book instantly, and explore culture effortlessly.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-muted-foreground hover:text-accent transition-colors">
@@ -43,17 +43,12 @@ const Footer = () => {
               </li>
               <li>
                 <Link to="/exhibitions" className="text-muted-foreground hover:text-accent transition-colors">
-                  Exhibitions
+                  Current Exhibitions
                 </Link>
               </li>
               <li>
                 <Link to="/chat" className="text-muted-foreground hover:text-accent transition-colors">
                   Book Tickets
-                </Link>
-              </li>
-              <li>
-                <Link to="/dashboard" className="text-muted-foreground hover:text-accent transition-colors">
-                  My Account
                 </Link>
               </li>
             </ul>
@@ -100,7 +95,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-2">
                 <MapPin className="w-4 h-4 text-accent" />
-                <span className="text-muted-foreground">123 Museum Ave, Culture City</span>
+                <span className="text-muted-foreground">Heritage Museum, 123 Culture Ave</span>
               </div>
             </div>
           </div>

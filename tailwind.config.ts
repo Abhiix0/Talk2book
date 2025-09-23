@@ -62,11 +62,13 @@ export default {
         "gradient-hero": "var(--gradient-hero)",
         "gradient-accent": "var(--gradient-accent)",
         "gradient-museum": "var(--gradient-museum)",
+        "gradient-premium": "var(--gradient-premium)",
       },
       boxShadow: {
-        "museum": "var(--shadow-museum)",
+        "premium": "var(--shadow-premium)",
         "chat": "var(--shadow-chat)",
         "card": "var(--shadow-card)",
+        "glow": "var(--shadow-glow)",
       },
       transitionTimingFunction: {
         "museum": "cubic-bezier(0.4, 0, 0.2, 1)",

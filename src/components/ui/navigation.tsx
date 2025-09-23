@@ -12,8 +12,6 @@ const Navigation = () => {
     { href: "/", label: "Home", icon: Home },
     { href: "/chat", label: "Book Tickets", icon: MessageSquare },
     { href: "/exhibitions", label: "Exhibitions", icon: Calendar },
-    { href: "/dashboard", label: "My Tickets", icon: User },
-    { href: "/admin", label: "Admin", icon: BarChart3 },
   ];
 
   const utilityItems = [
@@ -25,7 +23,7 @@ const Navigation = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border sticky top-0 z-50">
+    <nav className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border sticky top-0 z-50 shadow-card">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -60,7 +58,7 @@ const Navigation = () => {
           {/* CTA Button */}
           <div className="hidden md:flex items-center space-x-4">
             <Link to="/chat">
-              <Button className="btn-museum">
+              <Button className="btn-premium">
                 Book Now
               </Button>
             </Link>
@@ -118,7 +116,7 @@ const Navigation = () => {
               </div>
               <div className="pt-2">
                 <Link to="/chat" onClick={() => setIsOpen(false)}>
-                  <Button className="w-full btn-museum">
+                  <Button className="w-full btn-premium">
                     Book Tickets Now
                   </Button>
                 </Link>

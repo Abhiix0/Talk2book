@@ -11,12 +11,12 @@ const Home = () => {
     {
       icon: Clock,
       title: "Skip Queues",
-      description: "Book tickets instantly and bypass long waiting lines. Your time is precious.",
+      description: "Book tickets instantly and bypass long waiting lines at Heritage Museum.",
     },
     {
       icon: MessageSquare,
-      title: "24/7 Chatbot Support",
-      description: "Get instant help anytime. Our AI assistant is always ready to assist you.",
+      title: "24/7 AI Assistant",
+      description: "Get instant help anytime. Our intelligent chatbot is always ready to assist.",
     },
     {
       icon: Shield,
@@ -26,12 +26,12 @@ const Home = () => {
     {
       icon: Globe,
       title: "Multi-language",
-      description: "Available in multiple languages to serve our diverse global community.",
+      description: "Available in multiple languages to serve our diverse community.",
     },
     {
       icon: Zap,
       title: "Instant Booking",
-      description: "Complete your museum ticket booking in under 2 minutes via chat.",
+      description: "Complete your Heritage Museum ticket booking in under 2 minutes via chat.",
     },
     {
       icon: Users,
@@ -42,14 +42,14 @@ const Home = () => {
 
   const stats = [
     { value: "50K+", label: "Happy Visitors" },
-    { value: "200+", label: "Partner Museums" },
+    { value: "15+", label: "Exhibitions" },
     { value: "99.9%", label: "Uptime" },
     { value: "4.9★", label: "User Rating" },
   ];
 
   const testimonials = [
     {
-      quote: "Talk2Book made museum visits so much easier! No more standing in line.",
+      quote: "Talk2Book made visiting Heritage Museum so much easier! No more standing in line.",
       author: "Sarah Chen",
       role: "Art Enthusiast",
     },
@@ -59,7 +59,7 @@ const Home = () => {
       role: "Parent",
     },
     {
-      quote: "Perfect for our school group. The admin dashboard helps track all bookings.",
+      quote: "Perfect for our school group. The booking process was incredibly smooth.",
       author: "Emily Watson",
       role: "Teacher",
     },
@@ -73,30 +73,30 @@ const Home = () => {
       <section className="relative py-20 lg:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-museum opacity-95"></div>
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60"
           style={{ backgroundImage: `url(${heroImage})` }}
         ></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 animate-fade-in">
-              Book Museum Tickets with{" "}
-              <span className="bg-gradient-accent bg-clip-text text-transparent">
-                AI-Powered Chat
+            <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 animate-fade-in">
+              Heritage Museum{" "}
+              <span className="bg-gradient-premium bg-clip-text text-transparent">
+                AI Ticketing
               </span>
             </h1>
-            <p className="text-xl text-white/90 mb-8 animate-slide-up">
-              Skip the queues, chat with our smart assistant, and book your museum experience instantly. 
+            <p className="text-xl text-muted-foreground mb-8 animate-slide-up">
+              Skip the queues, chat with our smart assistant, and book your Heritage Museum experience instantly. 
               Culture made accessible for everyone.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 animate-slide-up">
               <Link to="/chat">
-                <Button size="lg" className="btn-museum text-lg px-8 py-3">
+                <Button size="lg" className="btn-glow text-lg px-8 py-3">
                   <MessageSquare className="w-5 h-5 mr-2" />
                   Start Booking Now
                 </Button>
               </Link>
               <Link to="/exhibitions">
-                <Button variant="outline" size="lg" className="text-lg px-8 py-3 bg-white/10 border-white/20 text-white hover:bg-white/20">
+                <Button variant="outline" size="lg" className="text-lg px-8 py-3 border-primary/30 text-foreground hover:bg-primary/10">
                   Explore Exhibitions
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
@@ -107,7 +107,7 @@ const Home = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-muted/30">
+      <section className="py-16 bg-card/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
@@ -126,8 +126,8 @@ const Home = () => {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Why Choose Talk2Book?
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
+              Why Choose Heritage Museum?
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Experience the future of museum ticketing with our innovative features designed for modern culture enthusiasts.
@@ -141,10 +141,10 @@ const Home = () => {
                   <div className="w-12 h-12 bg-gradient-hero rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                     <feature.icon className="w-6 h-6 text-primary-foreground" />
                   </div>
-                  <CardTitle className="text-xl">{feature.title}</CardTitle>
+                  <CardTitle className="text-xl text-foreground">{feature.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription className="text-base">
+                  <CardDescription className="text-base text-muted-foreground">
                     {feature.description}
                   </CardDescription>
                 </CardContent>
@@ -155,14 +155,14 @@ const Home = () => {
       </section>
 
       {/* How It Works */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-20 bg-card/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
               How It Works
             </h2>
             <p className="text-xl text-muted-foreground">
-              Book your museum tickets in three simple steps
+              Book your Heritage Museum tickets in three simple steps
             </p>
           </div>
           
@@ -171,7 +171,7 @@ const Home = () => {
               {
                 step: "01",
                 title: "Start Chatting",
-                description: "Tell our AI assistant which museum you'd like to visit and when.",
+                description: "Tell our AI assistant which exhibition you'd like to visit and when.",
               },
               {
                 step: "02",
@@ -188,7 +188,7 @@ const Home = () => {
                 <div className="w-16 h-16 bg-gradient-accent rounded-full flex items-center justify-center text-2xl font-bold text-accent-foreground mx-auto mb-6">
                   {step.step}
                 </div>
-                <h3 className="text-xl font-semibold mb-4">{step.title}</h3>
+                <h3 className="text-xl font-semibold mb-4 text-foreground">{step.title}</h3>
                 <p className="text-muted-foreground">{step.description}</p>
               </div>
             ))}
@@ -200,11 +200,11 @@ const Home = () => {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              What Our Users Say
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
+              What Our Visitors Say
             </h2>
             <p className="text-xl text-muted-foreground">
-              Join thousands of satisfied culture enthusiasts
+              Join thousands of satisfied Heritage Museum visitors
             </p>
           </div>
           
@@ -221,7 +221,7 @@ const Home = () => {
                     "{testimonial.quote}"
                   </blockquote>
                   <div>
-                    <div className="font-semibold">{testimonial.author}</div>
+                    <div className="font-semibold text-foreground">{testimonial.author}</div>
                     <div className="text-sm text-muted-foreground">{testimonial.role}</div>
                   </div>
                 </CardContent>
@@ -232,13 +232,13 @@ const Home = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-museum">
+      <section className="py-20 bg-gradient-premium">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-6">
             Ready to Skip the Queue?
           </h2>
-          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            Join thousands of smart museum visitors who book their tickets the modern way.
+          <p className="text-lg text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
+            Join thousands of smart Heritage Museum visitors who book their tickets the modern way.
           </p>
           <Link to="/chat">
             <Button size="lg" className="btn-accent text-lg px-8 py-3 animate-bounce-gentle">

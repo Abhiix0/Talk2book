@@ -6,102 +6,84 @@
 
 @layer base {
   :root {
-    /* Core Museum Theme Colors */
-    --background: 0 0% 100%;
-    --foreground: 215 28% 17%; /* #1F2937 equivalent */
+    /* Dark Premium Museum Theme */
+    --background: 210 11% 7%; /* #121212 - almost black */
+    --foreground: 0 0% 88%; /* #E0E0E0 - light gray text */
 
-    --card: 0 0% 100%;
-    --card-foreground: 215 28% 17%;
+    --card: 210 11% 10%; /* Slightly lighter than background */
+    --card-foreground: 0 0% 88%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 215 28% 17%;
+    --popover: 210 11% 10%;
+    --popover-foreground: 0 0% 88%;
 
     /* Museum Brand Colors */
-    --primary: 217 91% 60%; /* #3B82F6 - Museum Blue */
+    --primary: 207 82% 52%; /* #1E88E5 - vibrant blue */
     --primary-foreground: 0 0% 100%;
-    --primary-light: 217 91% 70%;
-    --primary-dark: 217 91% 50%;
+    --primary-light: 207 82% 62%;
+    --primary-dark: 207 82% 42%;
 
-    --secondary: 215 28% 17%; /* #1F2937 - Museum Dark Gray */
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 210 11% 20%; /* Dark gray for secondary elements */
+    --secondary-foreground: 0 0% 88%;
 
-    --accent: 45 93% 58%; /* #FBBF24 - Museum Gold */
-    --accent-foreground: 215 28% 17%;
-    --accent-light: 45 93% 68%;
+    --accent: 45 100% 51%; /* #FFC107 - yellow accent */
+    --accent-foreground: 210 11% 7%;
+    --accent-light: 45 100% 61%;
 
     /* Chat System Colors */
-    --chat-user: 217 91% 60%; /* User messages - blue */
+    --chat-user: 207 82% 52%; /* User messages - blue */
     --chat-user-foreground: 0 0% 100%;
-    --chat-bot: 210 14% 97%; /* Bot messages - light gray */
-    --chat-bot-foreground: 215 28% 17%;
-    --chat-background: 210 14% 97%;
+    --chat-bot: 210 11% 20%; /* Bot messages - dark gray #333333 */
+    --chat-bot-foreground: 0 0% 88%; /* #E0E0E0 text */
+    --chat-background: 210 11% 7%;
 
     /* UI States */
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 217 91% 60%;
+    --muted: 210 11% 15%;
+    --muted-foreground: 0 0% 65%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 210 11% 20%;
+    --input: 210 11% 20%;
+    --ring: 207 82% 52%;
     --radius: 0.75rem;
 
-    /* Museum Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-light)));
-    --gradient-accent: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--accent-light)));
-    --gradient-museum: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--primary-dark)));
-
-    /* Shadows */
-    --shadow-museum: 0 10px 30px -10px hsl(var(--primary) / 0.3);
-    --shadow-chat: 0 2px 8px hsl(var(--primary) / 0.1);
-    --shadow-card: 0 4px 16px hsl(215 28% 17% / 0.1);
-
-    /* Animations */
-    --transition-museum: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-chat: all 0.2s ease-out;
-
-  }
-
-  .dark {
-    /* Dark mode for museum theme */
-    --background: 215 28% 17%; /* Dark gray background */
-    --foreground: 0 0% 100%;
-
-    --card: 215 25% 20%;
-    --card-foreground: 0 0% 100%;
-
-    --popover: 215 25% 20%;
-    --popover-foreground: 0 0% 100%;
-
-    --primary: 217 91% 70%; /* Brighter blue for dark mode */
-    --primary-foreground: 215 28% 17%;
-    --primary-light: 217 91% 80%;
-    --primary-dark: 217 91% 60%;
-
-    --secondary: 215 25% 25%;
-    --secondary-foreground: 0 0% 100%;
-
-    --accent: 45 93% 68%; /* Brighter gold for dark mode */
-    --accent-foreground: 215 28% 17%;
-    --accent-light: 45 93% 78%;
-
-    --chat-user: 217 91% 70%;
-    --chat-user-foreground: 215 28% 17%;
-    --chat-bot: 215 25% 25%;
-    --chat-bot-foreground: 0 0% 100%;
-    --chat-background: 215 25% 20%;
-
-    --muted: 215 25% 25%;
-    --muted-foreground: 215 20% 65%;
-    --destructive: 0 62.8% 50%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 215 25% 25%;
-    --input: 215 25% 25%;
-    --ring: 217 91% 70%;
-
+    /* Premium Gradients */
     --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-light)));
     --gradient-accent: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--accent-light)));
     --gradient-museum: linear-gradient(135deg, hsl(var(--background)), hsl(var(--primary-dark)));
+    --gradient-premium: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+
+    /* Premium Shadows */
+    --shadow-premium: 0 25px 50px -12px hsl(var(--primary) / 0.25);
+    --shadow-chat: 0 4px 12px hsl(var(--primary) / 0.15);
+    --shadow-card: 0 8px 24px hsl(210 11% 4% / 0.4);
+    --shadow-glow: 0 0 40px hsl(var(--primary) / 0.3);
+
+    /* Smooth Transitions */
+    --transition-premium: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-chat: all 0.3s ease-out;
+  }
+
+  .dark {
+    /* Dark mode uses same values as default since we're dark-first */
+    --background: 210 11% 7%;
+    --foreground: 0 0% 88%;
+    --card: 210 11% 10%;
+    --card-foreground: 0 0% 88%;
+    --popover: 210 11% 10%;
+    --popover-foreground: 0 0% 88%;
+    --primary: 207 82% 52%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 11% 20%;
+    --secondary-foreground: 0 0% 88%;
+    --accent: 45 100% 51%;
+    --accent-foreground: 210 11% 7%;
+    --muted: 210 11% 15%;
+    --muted-foreground: 0 0% 65%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 210 11% 20%;
+    --input: 210 11% 20%;
+    --ring: 207 82% 52%;
   }
 }
 
@@ -114,19 +96,19 @@
     @apply bg-background text-foreground font-sans;
   }
 
-  /* Chat bubble animations */
+  /* Premium chat bubble animations */
   .chat-bubble-enter {
-    animation: bubble-slide-in 0.3s ease-out;
+    animation: premium-bubble-slide 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .chat-typing {
-    animation: typing 1.5s infinite;
+    animation: premium-typing 1.8s infinite;
   }
 
-  @keyframes bubble-slide-in {
+  @keyframes premium-bubble-slide {
     from {
       opacity: 0;
-      transform: translateY(10px) scale(0.95);
+      transform: translateY(15px) scale(0.95);
     }
     to {
       opacity: 1;
@@ -134,41 +116,60 @@
     }
   }
 
-  @keyframes typing {
-    0%, 50%, 100% { opacity: 1; }
-    25%, 75% { opacity: 0.5; }
+  @keyframes premium-typing {
+    0%, 60%, 100% { opacity: 1; }
+    30% { opacity: 0.4; }
   }
 
-  /* Museum card hover effects */
+  /* Premium museum card effects */
   .museum-card {
-    transition: var(--transition-museum);
+    transition: var(--transition-premium);
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
   }
 
   .museum-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-museum);
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-premium);
+    border-color: hsl(var(--primary) / 0.3);
   }
 
-  /* Button variants */
-  .btn-museum {
+  /* Premium button variants */
+  .btn-premium {
     background: var(--gradient-hero);
     color: hsl(var(--primary-foreground));
-    transition: var(--transition-museum);
+    transition: var(--transition-premium);
+    box-shadow: var(--shadow-chat);
   }
 
-  .btn-museum:hover {
+  .btn-premium:hover {
     transform: translateY(-2px);
-    box-shadow: var(--shadow-museum);
+    box-shadow: var(--shadow-premium);
+    filter: brightness(1.1);
   }
 
   .btn-accent {
     background: var(--gradient-accent);
     color: hsl(var(--accent-foreground));
-    transition: var(--transition-museum);
+    transition: var(--transition-premium);
+    box-shadow: var(--shadow-chat);
   }
 
   .btn-accent:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 25px hsl(var(--accent) / 0.4);
+    filter: brightness(1.1);
+  }
+
+  .btn-glow {
+    background: var(--gradient-premium);
+    color: hsl(var(--primary-foreground));
+    box-shadow: var(--shadow-glow);
+    animation: glow-pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes glow-pulse {
+    0%, 100% { box-shadow: var(--shadow-glow); }
+    50% { box-shadow: 0 0 60px hsl(var(--primary) / 0.5); }
   }
 }

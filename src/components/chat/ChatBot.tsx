@@ -25,30 +25,22 @@ const ChatBot = ({ selectedExhibition }: ChatBotProps) => {
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Bot responses and conversation flow
+  // Bot responses for Heritage Museum
   const botResponses = {
-    greeting: "Hello! Welcome to Talk2Book 🎨 I'm your museum booking assistant. I can help you book tickets, check exhibitions, or answer questions. What would you like to do today?",
-    bookTicket: "Great choice! Let me help you book museum tickets. Which museum would you like to visit?",
-    exhibitions: "Here are our current featured exhibitions. Which one interests you?",
-    payment: "Perfect! Let me prepare your booking details for payment.",
-    confirmation: "🎉 Booking confirmed! Your tickets have been sent to your email. Have a wonderful visit!",
+    greeting: "Hello! Welcome to Heritage Museum's AI booking assistant 🎨 I'm here to help you book tickets for our current exhibitions. What would you like to do today?",
+    bookTicket: "Great choice! I can help you book tickets for Heritage Museum. Which exhibition would you like to visit?",
+    exhibitions: "Here are our current featured exhibitions at Heritage Museum. Which one interests you?",
+    payment: "Perfect! Let me prepare your Heritage Museum booking details for payment.",
+    confirmation: "🎉 Booking confirmed! Your Heritage Museum tickets have been sent to your email. Have a wonderful visit!",
   };
 
   const quickActions = [
-    "Book museum tickets",
+    "Book exhibition tickets",
     "View current exhibitions", 
-    "Check my bookings",
-    "Cancel a booking",
-    "Get directions",
+    "Check ticket availability",
+    "Group booking info",
+    "Museum hours & location",
     "Ask a question"
-  ];
-
-  const museums = [
-    "Metropolitan Museum of Art",
-    "Museum of Modern Art (MoMA)",
-    "Natural History Museum",
-    "Science Museum",
-    "Art Institute"
   ];
 
   const exhibitions = [
@@ -63,7 +55,7 @@ const ChatBot = ({ selectedExhibition }: ChatBotProps) => {
     const initialMessage: Message = {
       id: "1",
       text: selectedExhibition 
-        ? `I see you're interested in "${selectedExhibition}". Let me help you book tickets for this exhibition!`
+        ? `I see you're interested in "${selectedExhibition}" at Heritage Museum. Let me help you book tickets for this exhibition!`
         : botResponses.greeting,
       isUser: false,
       timestamp: new Date(),
@@ -116,13 +108,13 @@ const ChatBot = ({ selectedExhibition }: ChatBotProps) => {
   const handleBotResponse = (userMessage: string) => {
     if (userMessage.includes("book") || userMessage.includes("ticket")) {
       addMessage(
-        "I'd be happy to help you book tickets! Which museum would you like to visit?",
+        "I'd be happy to help you book tickets for Heritage Museum! Which exhibition would you like to visit?",
         false,
-        museums
+        exhibitions.map(ex => ex.name)
       );
     } else if (userMessage.includes("exhibition") || userMessage.includes("show")) {
       addMessage(
-        "Here are our current featured exhibitions:",
+        "Here are our current featured exhibitions at Heritage Museum:",
         false
       );
       // Add exhibition cards
@@ -133,27 +125,22 @@ const ChatBot = ({ selectedExhibition }: ChatBotProps) => {
           exhibitions.map(ex => ex.name)
         );
       }, 500);
-    } else if (museums.some(museum => userMessage.includes(museum.toLowerCase()))) {
-      const selectedMuseum = museums.find(museum => userMessage.includes(museum.toLowerCase()));
+    } else if (exhibitions.some(ex => userMessage.includes(ex.name.toLowerCase()))) {
+      const selectedEx = exhibitions.find(ex => userMessage.includes(ex.name.toLowerCase()));
       addMessage(
-        `Great choice! ${selectedMuseum} has amazing exhibitions. How many tickets do you need?`,
+        `Excellent choice! ${selectedEx?.name} is one of our most popular exhibitions at Heritage Museum. How many tickets do you need?`,
         false,
         ["1 ticket", "2 tickets", "3-5 tickets", "Group booking (6+)"]
       );
-    } else if (userMessage.includes("cancel")) {
+    } else if (userMessage.includes("hours") || userMessage.includes("location")) {
       addMessage(
-        "I can help you cancel a booking. Please provide your booking reference number or email address.",
-        false
-      );
-    } else if (userMessage.includes("direction") || userMessage.includes("location")) {
-      addMessage(
-        "📍 Most of our partner museums are located in the city center with easy public transport access. Which museum do you need directions to?",
+        "📍 Heritage Museum is open Tuesday-Sunday, 10 AM to 6 PM. We're located at 123 Culture Ave, easily accessible by public transport. Would you like directions or booking assistance?",
         false,
-        museums
+        ["Get directions", "Book tickets", "Check exhibitions"]
       );
     } else if (["1", "2", "3", "4", "5"].some(num => userMessage.includes(num))) {
       addMessage(
-        "Perfect! When would you like to visit?",
+        "Perfect! When would you like to visit Heritage Museum?",
         false,
         ["Today", "Tomorrow", "This weekend", "Next week", "Choose specific date"]
       );
@@ -165,27 +152,27 @@ const ChatBot = ({ selectedExhibition }: ChatBotProps) => {
       };
       
       addMessage(
-        `📋 Booking Summary:\n• ${bookingData.tickets} ticket(s)\n• Date: ${bookingData.date}\n• Price: $${bookingData.price * bookingData.tickets}\n\nShall I proceed with payment?`,
+        `📋 Heritage Museum Booking Summary:\n• ${bookingData.tickets} ticket(s)\n• Date: ${bookingData.date}\n• Price: $${bookingData.price * bookingData.tickets}\n\nShall I proceed with secure payment?`,
         false,
         ["Proceed to payment", "Modify booking", "Add more tickets"],
         bookingData
       );
     } else if (userMessage.includes("payment") || userMessage.includes("proceed")) {
       addMessage(
-        "🔒 Redirecting to secure payment... Please wait.",
+        "🔒 Redirecting to secure payment gateway... Please wait.",
         false
       );
       setTimeout(() => {
         addMessage(
-          "🎉 Payment successful! Your booking is confirmed. You'll receive your e-tickets via email shortly. Thank you for choosing Talk2Book!",
+          "🎉 Payment successful! Your Heritage Museum booking is confirmed. You'll receive your e-tickets via email shortly. Thank you for choosing us!",
           false,
-          ["View my tickets", "Book another museum", "Share feedback"]
+          ["View my tickets", "Book another exhibition", "Share feedback"]
         );
       }, 2000);
     } else {
       // Default response
       addMessage(
-        "I'm here to help with museum bookings! You can ask me to book tickets, check exhibitions, or get information about our partner museums. What would you like to do?",
+        "I'm here to help with Heritage Museum bookings! You can ask me to book tickets, check exhibitions, or get information about our museum. What would you like to do?",
         false,
         quickActions
       );
@@ -205,7 +192,7 @@ const ChatBot = ({ selectedExhibition }: ChatBotProps) => {
             <Bot className="w-6 h-6" />
           </div>
           <div>
-            <h3 className="font-semibold">Talk2Book Assistant</h3>
+            <h3 className="font-semibold">Heritage Museum Assistant</h3>
             <p className="text-sm opacity-90">
               {isTyping ? "Typing..." : "Online • Ready to help"}
             </p>
@@ -249,7 +236,7 @@ const ChatBot = ({ selectedExhibition }: ChatBotProps) => {
                           variant="outline"
                           size="sm"
                           onClick={() => handleSend(option)}
-                          className="text-xs"
+                          className="text-xs border-primary/30 hover:bg-primary/10"
                         >
                           {option}
                         </Button>
@@ -264,7 +251,7 @@ const ChatBot = ({ selectedExhibition }: ChatBotProps) => {
                         <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-2">
                             <Ticket className="w-4 h-4 text-primary" />
-                            <span className="font-medium">Booking Details</span>
+                            <span className="font-medium">Heritage Museum</span>
                           </div>
                           <Badge variant="secondary">
                             ${message.bookingData.price * message.bookingData.tickets}
@@ -317,12 +304,12 @@ const ChatBot = ({ selectedExhibition }: ChatBotProps) => {
             onChange={(e) => setInputValue(e.target.value)}
             placeholder="Type your message..."
             onKeyPress={(e) => e.key === "Enter" && handleSend()}
-            className="flex-1"
+            className="flex-1 bg-input border-border"
           />
           <Button 
             onClick={() => handleSend()}
             size="sm"
-            className="btn-museum"
+            className="btn-premium"
           >
             <Send className="w-4 h-4" />
           </Button>
