@@ -1,270 +1,183 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { MessageSquare, Clock, Shield, Zap, Users, Globe, ArrowRight, CheckCircle } from "lucide-react";
+import { MessageSquare, Clock, Shield, Zap, Users, Globe, ArrowRight, CheckCircle, Star } from "lucide-react";
 import Navigation from "@/components/ui/navigation";
 import Footer from "@/components/layout/Footer";
 import heroImage from "@/assets/hero-museum.jpg";
+import modernArt from "@/assets/modern-art.jpg";
+import ancientCivilization from "@/assets/ancient-civilizations.jpg";
 
 const Home = () => {
   const navigate = useNavigate();
+  
   const features = [
     {
       icon: Clock,
       title: "Skip Queues",
-      description: "Book tickets instantly and bypass long waiting lines at Heritage Museum.",
+      description: "Book tickets instantly and bypass long waiting lines.",
     },
     {
       icon: MessageSquare,
-      title: "24/7 AI Assistant",
-      description: "Get instant help anytime. Our intelligent chatbot is always ready to assist.",
+      title: "24/7 Support",
+      description: "Our AI assistant is always ready to help you with your booking.",
     },
     {
       icon: Shield,
       title: "Secure Payments",
-      description: "Your transactions are protected with bank-level security and encryption.",
-    },
-    {
-      icon: Globe,
-      title: "Multi-language",
-      description: "Available in multiple languages to serve our diverse community.",
-    },
-    {
-      icon: Zap,
-      title: "Instant Booking",
-      description: "Complete your Heritage Museum ticket booking in under 2 minutes via chat.",
-    },
-    {
-      icon: Users,
-      title: "Group Bookings",
-      description: "Easy group reservations for families, schools, and tour groups.",
+      description: "Your transactions are protected with bank-level security.",
     },
   ];
 
-  const stats = [
-    { value: "50K+", label: "Happy Visitors" },
-    { value: "15+", label: "Exhibitions" },
-    { value: "99.9%", label: "Uptime" },
-    { value: "4.9★", label: "User Rating" },
-  ];
-
-  const testimonials = [
+  const exhibitions = [
     {
-      quote: "Talk2Book made visiting Heritage Museum so much easier! No more standing in line.",
-      author: "Sarah Chen",
-      role: "Art Enthusiast",
+      title: "Modern Art Collection",
+      description: "Explore contemporary masterpieces from renowned artists worldwide.",
+      image: modernArt,
+      date: "Ongoing"
     },
     {
-      quote: "The chatbot understood exactly what I wanted. Booked family tickets in minutes!",
-      author: "Michael Rodriguez",
-      role: "Parent",
+      title: "Ancient Civilizations",
+      description: "Journey through time with artifacts from ancient cultures.",
+      image: ancientCivilization,
+      date: "Until Dec 31, 2024"
     },
     {
-      quote: "Perfect for our school group. The booking process was incredibly smooth.",
-      author: "Emily Watson",
-      role: "Teacher",
-    },
+      title: "Digital Futures",
+      description: "Interactive exhibition showcasing the intersection of art and technology.",
+      image: heroImage,
+      date: "Sep 1 - Dec 15, 2024"
+    }
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-b from-[#121212] to-[#1A1A1A] text-white">
       <Navigation />
       
       {/* Hero Section */}
-      <section className="relative py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              <span className="text-foreground">Skip the Queues.</span>
-              <br />
-              <span className="bg-gradient-hero bg-clip-text text-transparent">
-                Book Tickets in Seconds.
-              </span>
+      <section 
+        className="relative py-16 md:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden min-h-[600px] flex items-center"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), url(${heroImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'fixed'
+        }}
+      >
+        <div className="max-w-7xl mx-auto w-full">
+          <div className="text-center max-w-4xl mx-auto">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+              <span className="text-white">Skip the Queues.</span>
+              <br className="hidden md:block" />
+              <span className="text-[#FBC02D]">Book Tickets in Seconds.</span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
-              Chat with our AI assistant and book your Heritage Museum tickets instantly. 
-              Experience ancient civilizations, modern art, and cutting-edge science exhibitions.
+            <p className="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
+              Your smart museum chatbot for hassle-free booking.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
                 size="lg" 
-                className="btn-premium text-lg px-8 py-6 transition-smooth"
+                className="bg-[#1E88E5] hover:bg-[#1976D2] text-white text-lg px-8 py-6 rounded-xl hover:shadow-lg hover:shadow-[#1E88E5]/30 transition-all duration-200"
                 onClick={() => navigate("/chat")}
               >
                 Start Booking
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="text-lg px-8 py-6 border-primary/30 hover:bg-primary/10 transition-smooth"
-                onClick={() => navigate("/exhibitions")}
-              >
-                View Exhibitions
-              </Button>
             </div>
           </div>
         </div>
-
-        {/* Floating highlights */}
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-          {[
-            { icon: MessageSquare, title: "24/7 Support", desc: "AI assistant always ready" },
-            { icon: Globe, title: "Multilingual", desc: "Available in multiple languages" },
-            { icon: Shield, title: "Secure Payments", desc: "Bank-level security" }
-          ].map((item, index) => (
-            <div key={index} className="text-center group">
-              <div className="w-16 h-16 bg-gradient-hero rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-smooth shadow-lg">
-                <item.icon className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold text-foreground mb-2">{item.title}</h3>
-              <p className="text-gray-300">{item.desc}</p>
-            </div>
-          ))}
-        </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-16 bg-card/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
-                  {stat.value}
+      {/* Exhibitions Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#1A1A1A]">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Current Exhibitions</h2>
+            <p className="text-gray-400 max-w-2xl mx-auto">
+              Explore our current and upcoming exhibitions. Book your tickets now for an unforgettable experience.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {exhibitions.map((exhibition, index) => (
+              <Card key={index} className="bg-[#1E1E1E] border border-gray-800 rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-[#1E88E5]/10 hover:border-[#1E88E5]/50 transition-all duration-300 group">
+                <div className="h-48 overflow-hidden">
+                  <img 
+                    src={exhibition.image} 
+                    alt={exhibition.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
-                <div className="text-muted-foreground">{stat.label}</div>
-              </div>
+                <CardHeader>
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <CardTitle className="text-xl text-white">{exhibition.title}</CardTitle>
+                      <p className="text-sm text-[#1E88E5] mt-1">{exhibition.date}</p>
+                    </div>
+                    <div className="flex items-center bg-[#1E88E5]/10 text-[#1E88E5] text-xs px-2 py-1 rounded-full">
+                      <Star className="w-3 h-3 mr-1 fill-current" />
+                      Featured
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-300 mb-4">{exhibition.description}</p>
+                  <Button 
+                    variant="outline" 
+                    className="w-full border-[#1E88E5] text-[#1E88E5] hover:bg-[#1E88E5]/10 hover:text-[#1E88E5] transition-colors"
+                    onClick={() => navigate("/exhibitions")}
+                  >
+                    Learn More
+                  </Button>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
-              Why Choose Heritage Museum?
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Experience the future of museum ticketing with our innovative features designed for modern culture enthusiasts.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <Card key={index} className="museum-card group">
-                <CardHeader>
-                  <div className="w-12 h-12 bg-gradient-hero rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <feature.icon className="w-6 h-6 text-primary-foreground" />
-                  </div>
-                  <CardTitle className="text-xl text-foreground">{feature.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-base text-muted-foreground">
-                    {feature.description}
-                  </CardDescription>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works */}
-      <section className="py-20 bg-card/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
-              How It Works
-            </h2>
-            <p className="text-xl text-muted-foreground">
-              Book your Heritage Museum tickets in three simple steps
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Choose Us</h2>
+            <p className="text-gray-400 max-w-2xl mx-auto">
+              Experience the future of museum ticketing with our innovative features
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                step: "01",
-                title: "Start Chatting",
-                description: "Tell our AI assistant which exhibition you'd like to visit and when.",
-              },
-              {
-                step: "02",
-                title: "Choose Options",
-                description: "Select your tickets, add-ons, and preferred time slots through natural conversation.",
-              },
-              {
-                step: "03",
-                title: "Secure Payment",
-                description: "Complete your booking with secure payment and receive instant confirmation.",
-              },
-            ].map((step, index) => (
-              <div key={index} className="text-center">
-                <div className="w-16 h-16 bg-gradient-accent rounded-full flex items-center justify-center text-2xl font-bold text-accent-foreground mx-auto mb-6">
-                  {step.step}
+            {features.map((feature, index) => (
+              <div 
+                key={index} 
+                className="bg-[#1E1E1E] p-8 rounded-2xl border border-gray-800 hover:border-[#1E88E5]/50 hover:shadow-lg hover:shadow-[#1E88E5]/10 transition-all duration-300"
+              >
+                <div className="w-14 h-14 bg-gradient-to-br from-[#1E88E5] to-[#0D47A1] rounded-xl flex items-center justify-center mb-6">
+                  <feature.icon className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold mb-4 text-foreground">{step.title}</h3>
-                <p className="text-muted-foreground">{step.description}</p>
+                <h3 className="text-xl font-semibold text-white mb-3">{feature.title}</h3>
+                <p className="text-gray-400">{feature.description}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
-              What Our Visitors Say
-            </h2>
-            <p className="text-xl text-muted-foreground">
-              Join thousands of satisfied Heritage Museum visitors
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="museum-card">
-                <CardContent className="pt-6">
-                  <div className="flex items-start space-x-1 mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <div key={i} className="w-4 h-4 bg-accent rounded-full"></div>
-                    ))}
-                  </div>
-                  <blockquote className="text-muted-foreground mb-6">
-                    "{testimonial.quote}"
-                  </blockquote>
-                  <div>
-                    <div className="font-semibold text-foreground">{testimonial.author}</div>
-                    <div className="text-sm text-muted-foreground">{testimonial.role}</div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-premium">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-6">
-            Ready to Skip the Queue?
-          </h2>
-          <p className="text-lg text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
-            Join thousands of smart Heritage Museum visitors who book their tickets the modern way.
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-[#1E1E1E] to-[#1A1A1A]">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Explore?</h2>
+          <p className="text-xl text-gray-300 mb-8">
+            Join thousands of visitors who've experienced the museum without the wait.
           </p>
           <Button 
             size="lg" 
-            className="btn-accent text-lg px-8 py-3 transition-smooth"
+            className="bg-[#1E88E5] hover:bg-[#1976D2] text-white text-lg px-8 py-6 rounded-xl hover:shadow-lg hover:shadow-[#1E88E5]/30 transition-all duration-200"
             onClick={() => navigate("/chat")}
           >
-            <MessageSquare className="w-5 h-5 mr-2" />
-            Book Your Tickets Now
+            Start Booking Now
+            <ArrowRight className="ml-2 w-5 h-5" />
           </Button>
         </div>
       </section>
