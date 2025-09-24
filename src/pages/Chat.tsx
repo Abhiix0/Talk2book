@@ -65,13 +65,7 @@ const Chat = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Chat Interface */}
           <div className="lg:col-span-2">
-            <Card className="h-[700px] flex flex-col shadow-premium">
-              <CardHeader className="pb-0">
-                <CardTitle className="flex items-center space-x-2 text-foreground">
-                  <MessageSquare className="w-5 h-5 text-primary" />
-                  <span>Heritage Museum Assistant</span>
-                </CardTitle>
-              </CardHeader>
+            <Card className="h-[700px] flex flex-col museum-card overflow-hidden">
               <CardContent className="flex-1 p-0">
                 <ChatBot selectedExhibition={selectedExhibition} />
               </CardContent>

@@ -163,12 +163,9 @@ const ChatBot = ({ selectedExhibition }: ChatBotProps) => {
         false
       );
       setTimeout(() => {
-        addMessage(
-          "🎉 Payment successful! Your Heritage Museum booking is confirmed. You'll receive your e-tickets via email shortly. Thank you for choosing us!",
-          false,
-          ["View my tickets", "Book another exhibition", "Share feedback"]
-        );
-      }, 2000);
+        // Navigate to payment page with booking data
+        window.location.href = '/payment';
+      }, 1500);
     } else {
       // Default response
       addMessage(
@@ -186,7 +183,7 @@ const ChatBot = ({ selectedExhibition }: ChatBotProps) => {
   return (
     <div className="flex flex-col h-full">
       {/* Chat Header */}
-      <div className="bg-gradient-hero p-4 text-primary-foreground">
+      <div className="bg-gradient-hero p-4 text-primary-foreground rounded-t-2xl">
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
             <Bot className="w-6 h-6" />
@@ -194,7 +191,18 @@ const ChatBot = ({ selectedExhibition }: ChatBotProps) => {
           <div>
             <h3 className="font-semibold">Heritage Museum Assistant</h3>
             <p className="text-sm opacity-90">
-              {isTyping ? "Typing..." : "Online • Ready to help"}
+              {isTyping ? (
+                <span className="flex items-center space-x-1">
+                  <span>Typing</span>
+                  <div className="flex space-x-0.5">
+                    <div className="w-1 h-1 bg-white/70 rounded-full typing-indicator"></div>
+                    <div className="w-1 h-1 bg-white/70 rounded-full typing-indicator"></div>
+                    <div className="w-1 h-1 bg-white/70 rounded-full typing-indicator"></div>
+                  </div>
+                </span>
+              ) : (
+                "Online • Ready to help"
+              )}
             </p>
           </div>
         </div>
@@ -212,10 +220,10 @@ const ChatBot = ({ selectedExhibition }: ChatBotProps) => {
           >
             <div
               className={cn(
-                "max-w-[80%] p-3 rounded-2xl shadow-chat chat-bubble-enter",
+                "max-w-[80%] p-4 shadow-lg chat-bubble-enter transition-smooth",
                 message.isUser
-                  ? "bg-chat-user text-chat-user-foreground"
-                  : "bg-chat-bot text-chat-bot-foreground"
+                  ? "bg-primary text-primary-foreground rounded-2xl rounded-br-md ml-auto"
+                  : "bg-card border border-border text-card-foreground rounded-2xl rounded-bl-md"
               )}
             >
               <div className="flex items-start space-x-2">
@@ -278,15 +286,15 @@ const ChatBot = ({ selectedExhibition }: ChatBotProps) => {
         {/* Typing Indicator */}
         {isTyping && (
           <div className="flex justify-start">
-            <div className="bg-chat-bot text-chat-bot-foreground p-3 rounded-2xl shadow-chat">
-              <div className="flex items-center space-x-2">
+            <div className="bg-card border border-border text-card-foreground p-4 rounded-2xl rounded-bl-md shadow-lg transition-smooth">
+              <div className="flex items-center space-x-3">
                 <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center">
                   <Bot className="w-4 h-4 text-primary-foreground" />
                 </div>
                 <div className="flex space-x-1">
-                  <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"></div>
-                  <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                  <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                  <div className="w-2 h-2 bg-muted-foreground rounded-full typing-indicator"></div>
+                  <div className="w-2 h-2 bg-muted-foreground rounded-full typing-indicator"></div>
+                  <div className="w-2 h-2 bg-muted-foreground rounded-full typing-indicator"></div>
                 </div>
               </div>
             </div>

@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Clock, MapPin, Calendar, Star, Search, Filter, Users } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
+import { Clock, MapPin, Calendar, Star, Search, Filter, Users, Ticket } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Navigation from "@/components/ui/navigation";
 import Footer from "@/components/layout/Footer";
@@ -14,8 +15,10 @@ import spaceScienceImage from "@/assets/space-science.jpg";
 import photographyImage from "@/assets/photography.jpg";
 
 const Exhibitions = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedExhibition, setSelectedExhibition] = useState<string>();
 
   const exhibitions = [
     {
@@ -23,11 +26,12 @@ const Exhibitions = () => {
       title: "Ancient Civilizations",
       description: "Journey through time and explore the fascinating world of ancient Egypt, Greece, and Rome. See authentic artifacts, mummies, and treasures from our permanent collection.",
       image: ancientImage,
-      price: 25,
+      price: "$25",
       duration: "2-3 hours",
       rating: 4.8,
       category: "History",
-      availability: "Available",
+      status: "Available",
+      visitors: "2.5K",
       features: ["Audio Guide", "Interactive", "Family Friendly"],
       nextAvailable: "Today at 2:00 PM"
     },
@@ -36,11 +40,12 @@ const Exhibitions = () => {
       title: "Modern Art Gallery",
       description: "Immerse yourself in our curated collection of modern and contemporary art, featuring works from renowned artists and emerging talents from around the world.",
       image: modernArtImage,
-      price: 30,
+      price: "$30",
       duration: "1-2 hours",
       rating: 4.9,
       category: "Art",
-      availability: "Limited",
+      status: "Limited",
+      visitors: "1.8K",
       features: ["Audio Guide", "Expert Tour", "Photography"],
       nextAvailable: "Tomorrow at 10:00 AM"
     },
@@ -49,11 +54,12 @@ const Exhibitions = () => {
       title: "Space & Science Discovery",
       description: "Explore the wonders of our universe with interactive planetarium shows, moon rocks, and hands-on space exploration exhibits perfect for all ages.",
       image: spaceScienceImage,
-      price: 28,
+      price: "$28",
       duration: "2-4 hours",
       rating: 4.7,
       category: "Science",
-      availability: "Available",
+      status: "Available",
+      visitors: "3.2K",
       features: ["Planetarium", "Interactive", "Kids Zone", "IMAX"],
       nextAvailable: "Today at 1:30 PM"
     },
@@ -62,11 +68,12 @@ const Exhibitions = () => {
       title: "Contemporary Photography",
       description: "A stunning collection of contemporary photography showcasing diverse perspectives from emerging and established artists worldwide, featuring rotating exhibitions.",
       image: photographyImage,
-      price: 22,
+      price: "$22",
       duration: "1-2 hours",
       rating: 4.6,
       category: "Photography",
-      availability: "Available",
+      status: "Available",
+      visitors: "1.1K",
       features: ["Artist Talks", "Photography", "Quiet Viewing"],
       nextAvailable: "Today at 3:00 PM"
     }
@@ -81,8 +88,8 @@ const Exhibitions = () => {
     return matchesSearch && matchesCategory;
   });
 
-  const getAvailabilityColor = (availability: string) => {
-    switch (availability) {
+  const getStatusColor = (status: string) => {
+    switch (status) {
       case "Available": return "bg-green-500/20 text-green-300 border-green-500/30";
       case "Limited": return "bg-yellow-500/20 text-yellow-300 border-yellow-500/30";
       case "Sold Out": return "bg-red-500/20 text-red-300 border-red-500/30";
@@ -154,80 +161,62 @@ const Exhibitions = () => {
 
         {/* Exhibition Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 mb-12">
-          {filteredExhibitions.map((exhibition) => (
-            <Card key={exhibition.id} className="museum-card overflow-hidden">
-              <div className="relative">
+          {filteredExhibitions.map((exhibition, index) => (
+            <Card key={index} className="overflow-hidden museum-card group">
+              <div className="relative h-48 overflow-hidden">
                 <img 
                   src={exhibition.image} 
                   alt={exhibition.title}
-                  className="w-full h-64 object-cover"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-smooth"
                 />
-                <div className="absolute top-4 left-4">
-                  <Badge className={getAvailabilityColor(exhibition.availability)}>
-                    {exhibition.availability}
-                  </Badge>
-                </div>
                 <div className="absolute top-4 right-4">
-                  <Badge className="bg-black/70 text-white border-none">
-                    ${exhibition.price}
+                  <Badge variant={exhibition.status === "Available" ? "default" : "secondary"}>
+                    {exhibition.status}
                   </Badge>
                 </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-smooth" />
               </div>
-              
-              <CardHeader>
-                <div className="flex justify-between items-start">
-                  <div className="flex-1">
-                    <CardTitle className="text-xl mb-2 text-foreground">{exhibition.title}</CardTitle>
-                    <CardDescription className="text-sm text-muted-foreground mb-2">
-                      Heritage Museum
-                    </CardDescription>
-                  </div>
+              <CardContent className="p-6">
+                <div className="flex justify-between items-start mb-3">
+                  <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-smooth">
+                    {exhibition.title}
+                  </h3>
                   <div className="flex items-center space-x-1">
                     <Star className="w-4 h-4 fill-accent text-accent" />
-                    <span className="text-sm font-medium text-foreground">{exhibition.rating}</span>
+                    <span className="text-sm text-gray-300">{exhibition.rating}</span>
                   </div>
                 </div>
                 
-                <p className="text-sm text-muted-foreground line-clamp-2">
+                <p className="text-gray-300 mb-4 line-clamp-2">
                   {exhibition.description}
                 </p>
-              </CardHeader>
-              
-              <CardContent className="pt-0">
-                {/* Features */}
-                <div className="flex flex-wrap gap-1 mb-4">
-                  {exhibition.features.map((feature, index) => (
-                    <Badge key={index} variant="secondary" className="text-xs bg-muted">
-                      {feature}
-                    </Badge>
-                  ))}
-                </div>
                 
-                {/* Details */}
-                <div className="space-y-2 mb-6">
-                  <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                    <Clock className="w-4 h-4" />
+                <div className="space-y-2 mb-4">
+                  <div className="flex items-center text-sm text-gray-300">
+                    <Clock className="w-4 h-4 mr-2 text-accent" />
                     <span>{exhibition.duration}</span>
                   </div>
-                  <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                    <MapPin className="w-4 h-4" />
-                    <span>Heritage Museum</span>
-                  </div>
-                  <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                    <Calendar className="w-4 h-4" />
-                    <span>Next available: {exhibition.nextAvailable}</span>
+                  <div className="flex items-center text-sm text-gray-300">
+                    <Users className="w-4 h-4 mr-2 text-accent" />
+                    <span>{exhibition.visitors} visitors this month</span>
                   </div>
                 </div>
                 
-                {/* Actions */}
-                <div className="flex space-x-2">
-                  <Link to={`/chat?exhibition=${encodeURIComponent(exhibition.title)}`} className="flex-1">
-                    <Button className="w-full btn-premium">
-                      Book Now
-                    </Button>
-                  </Link>
-                  <Button variant="outline" size="default" className="border-primary/30 hover:bg-primary/10">
-                    Learn More
+                <Separator className="my-4" />
+                
+                <div className="flex items-center justify-between">
+                  <div className="text-2xl font-bold text-primary">
+                    {exhibition.price}
+                  </div>
+                  <Button 
+                    className="btn-accent w-full ml-4 transition-smooth"
+                    onClick={() => {
+                      setSelectedExhibition(exhibition.title);
+                      navigate("/chat", { state: { selectedExhibition: exhibition.title } });
+                    }}
+                  >
+                    <Ticket className="w-4 h-4 mr-2" />
+                    Book Now
                   </Button>
                 </div>
               </CardContent>

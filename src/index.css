@@ -6,8 +6,9 @@
 
 @layer base {
   :root {
-    /* Dark Premium Museum Theme */
+    /* Dark Premium Museum Theme with Gradient */
     --background: 210 11% 7%; /* #121212 - almost black */
+    --background-gradient: linear-gradient(180deg, hsl(210 11% 7%), hsl(210 11% 10%)); /* #121212 to #1A1A1A */
     --foreground: 0 0% 88%; /* #E0E0E0 - light gray text */
 
     --card: 210 11% 10%; /* Slightly lighter than background */
@@ -93,7 +94,9 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply text-foreground font-sans;
+    background: var(--background-gradient);
+    min-height: 100vh;
   }
 
   /* Premium chat bubble animations */
@@ -123,15 +126,40 @@
 
   /* Premium museum card effects */
   .museum-card {
-    transition: var(--transition-premium);
+    transition: all 0.3s ease-in-out;
     background: hsl(var(--card));
     border: 1px solid hsl(var(--border));
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px -5px hsl(210 11% 4% / 0.25);
   }
 
   .museum-card:hover {
     transform: translateY(-8px);
-    box-shadow: var(--shadow-premium);
-    border-color: hsl(var(--primary) / 0.3);
+    box-shadow: 0 25px 50px -12px hsl(210 11% 4% / 0.5), 0 0 0 1px hsl(var(--primary) / 0.3);
+    border-color: hsl(var(--primary) / 0.5);
+  }
+
+  /* Enhanced transitions for all interactive elements */
+  .transition-smooth {
+    transition: all 0.2s ease-in-out;
+  }
+
+  /* Typing indicator animation */
+  @keyframes typing-dots {
+    0%, 60%, 100% { opacity: 0.3; }
+    30% { opacity: 1; }
+  }
+
+  .typing-indicator {
+    animation: typing-dots 1.4s infinite;
+  }
+
+  .typing-indicator:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .typing-indicator:nth-child(3) {
+    animation-delay: 0.4s;
   }
 
   /* Premium button variants */

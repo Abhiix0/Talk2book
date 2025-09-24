@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { MessageSquare, Clock, Shield, Zap, Users, Globe, ArrowRight, CheckCircle } from "lucide-react";
@@ -7,6 +7,7 @@ import Footer from "@/components/layout/Footer";
 import heroImage from "@/assets/hero-museum.jpg";
 
 const Home = () => {
+  const navigate = useNavigate();
   const features = [
     {
       icon: Clock,
@@ -70,39 +71,56 @@ const Home = () => {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="relative py-20 lg:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-museum opacity-95"></div>
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60"
-          style={{ backgroundImage: `url(${heroImage})` }}
-        ></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 animate-fade-in">
-              Heritage Museum{" "}
-              <span className="bg-gradient-premium bg-clip-text text-transparent">
-                AI Ticketing
+      <section className="relative py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+              <span className="text-foreground">Skip the Queues.</span>
+              <br />
+              <span className="bg-gradient-hero bg-clip-text text-transparent">
+                Book Tickets in Seconds.
               </span>
             </h1>
-            <p className="text-xl text-muted-foreground mb-8 animate-slide-up">
-              Skip the queues, chat with our smart assistant, and book your Heritage Museum experience instantly. 
-              Culture made accessible for everyone.
+            <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
+              Chat with our AI assistant and book your Heritage Museum tickets instantly. 
+              Experience ancient civilizations, modern art, and cutting-edge science exhibitions.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 animate-slide-up">
-              <Link to="/chat">
-                <Button size="lg" className="btn-glow text-lg px-8 py-3">
-                  <MessageSquare className="w-5 h-5 mr-2" />
-                  Start Booking Now
-                </Button>
-              </Link>
-              <Link to="/exhibitions">
-                <Button variant="outline" size="lg" className="text-lg px-8 py-3 border-primary/30 text-foreground hover:bg-primary/10">
-                  Explore Exhibitions
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
-              </Link>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button 
+                size="lg" 
+                className="btn-premium text-lg px-8 py-6 transition-smooth"
+                onClick={() => navigate("/chat")}
+              >
+                Start Booking
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="text-lg px-8 py-6 border-primary/30 hover:bg-primary/10 transition-smooth"
+                onClick={() => navigate("/exhibitions")}
+              >
+                View Exhibitions
+              </Button>
             </div>
           </div>
+        </div>
+
+        {/* Floating highlights */}
+        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          {[
+            { icon: MessageSquare, title: "24/7 Support", desc: "AI assistant always ready" },
+            { icon: Globe, title: "Multilingual", desc: "Available in multiple languages" },
+            { icon: Shield, title: "Secure Payments", desc: "Bank-level security" }
+          ].map((item, index) => (
+            <div key={index} className="text-center group">
+              <div className="w-16 h-16 bg-gradient-hero rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-smooth shadow-lg">
+                <item.icon className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-2">{item.title}</h3>
+              <p className="text-gray-300">{item.desc}</p>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -240,12 +258,14 @@ const Home = () => {
           <p className="text-lg text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
             Join thousands of smart Heritage Museum visitors who book their tickets the modern way.
           </p>
-          <Link to="/chat">
-            <Button size="lg" className="btn-accent text-lg px-8 py-3 animate-bounce-gentle">
-              <MessageSquare className="w-5 h-5 mr-2" />
-              Book Your Tickets Now
-            </Button>
-          </Link>
+          <Button 
+            size="lg" 
+            className="btn-accent text-lg px-8 py-3 transition-smooth"
+            onClick={() => navigate("/chat")}
+          >
+            <MessageSquare className="w-5 h-5 mr-2" />
+            Book Your Tickets Now
+          </Button>
         </div>
       </section>
 
