@@ -1,9 +1,8 @@
 import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Send, Bot, User, Clock, MapPin, Calendar, Ticket } from "lucide-react";
+import { Send, Bot, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Message {
@@ -12,56 +11,49 @@ interface Message {
   isUser: boolean;
   timestamp: Date;
   options?: string[];
-  bookingData?: any;
 }
 
 interface ChatBotProps {
   selectedExhibition?: string;
 }
 
+type BookingStep = 'exhibition' | 'date' | 'tickets' | 'confirm' | 'processing' | 'complete';
+
+interface BookingData {
+  exhibition: string;
+  date: string;
+  tickets: number;
+}
+
 const ChatBot = ({ selectedExhibition }: ChatBotProps) => {
+  const navigate = useNavigate();
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [currentStep, setCurrentStep] = useState<BookingStep>('exhibition');
+  const [bookingData, setBookingData] = useState<BookingData>({
+    exhibition: selectedExhibition || '',
+    date: '',
+    tickets: 0,
+  });
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Bot responses for Heritage Museum
-  const botResponses = {
-    greeting: "Hello! Welcome to Heritage Museum's AI booking assistant 🎨 I'm here to help you book tickets for our current exhibitions. What would you like to do today?",
-    bookTicket: "Great choice! I can help you book tickets for Heritage Museum. Which exhibition would you like to visit?",
-    exhibitions: "Here are our current featured exhibitions at Heritage Museum. Which one interests you?",
-    payment: "Perfect! Let me prepare your Heritage Museum booking details for payment.",
-    confirmation: "🎉 Booking confirmed! Your Heritage Museum tickets have been sent to your email. Have a wonderful visit!",
-  };
-
-  const quickActions = [
-    "Book exhibition tickets",
-    "View current exhibitions", 
-    "Check ticket availability",
-    "Group booking info",
-    "Museum hours & location",
-    "Ask a question"
-  ];
-
   const exhibitions = [
-    { name: "Ancient Civilizations", price: "$25", duration: "2-3 hours" },
-    { name: "Modern Art Gallery", price: "$30", duration: "1-2 hours" },
-    { name: "Space & Science", price: "$28", duration: "2-4 hours" },
-    { name: "Contemporary Photography", price: "$22", duration: "1-2 hours" },
+    "Ancient Civilizations",
+    "Modern Art Gallery",
+    "Space & Science",
+    "Contemporary Photography",
   ];
 
   useEffect(() => {
-    // Initial greeting
-    const initialMessage: Message = {
-      id: "1",
-      text: selectedExhibition 
-        ? `I see you're interested in "${selectedExhibition}" at Heritage Museum. Let me help you book tickets for this exhibition!`
-        : botResponses.greeting,
-      isUser: false,
-      timestamp: new Date(),
-      options: selectedExhibition ? ["Book tickets", "Learn more", "View other exhibitions"] : quickActions,
-    };
-    setMessages([initialMessage]);
+    // Initial greeting and first question
+    if (selectedExhibition) {
+      setBookingData(prev => ({ ...prev, exhibition: selectedExhibition }));
+      addBotMessage(`Great! You've selected "${selectedExhibition}". When would you like to visit? (e.g., Today, Tomorrow, or a specific date)`, 1000);
+      setCurrentStep('date');
+    } else {
+      addBotMessage("Welcome to Heritage Museum! 🎨 I'll help you book tickets. Which exhibition would you like to visit?", 500, exhibitions);
+    }
   }, [selectedExhibition]);
 
   useEffect(() => {
@@ -72,107 +64,116 @@ const ChatBot = ({ selectedExhibition }: ChatBotProps) => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const addMessage = (text: string, isUser: boolean, options?: string[], bookingData?: any) => {
+  const addMessage = (text: string, isUser: boolean, options?: string[]) => {
     const newMessage: Message = {
       id: Date.now().toString(),
       text,
       isUser,
       timestamp: new Date(),
       options,
-      bookingData,
     };
     setMessages(prev => [...prev, newMessage]);
   };
 
-  const simulateTyping = (callback: () => void, delay = 1000) => {
+  const addBotMessage = (text: string, delay: number = 1000, options?: string[]) => {
     setIsTyping(true);
     setTimeout(() => {
       setIsTyping(false);
-      callback();
+      addMessage(text, false, options);
     }, delay);
   };
 
   const handleSend = (message: string = inputValue) => {
     if (!message.trim()) return;
 
-    // Add user message
     addMessage(message, true);
     setInputValue("");
 
-    // Simulate bot response
-    simulateTyping(() => {
-      handleBotResponse(message.toLowerCase());
-    });
+    processUserInput(message);
   };
 
-  const handleBotResponse = (userMessage: string) => {
-    if (userMessage.includes("book") || userMessage.includes("ticket")) {
-      addMessage(
-        "I'd be happy to help you book tickets for Heritage Museum! Which exhibition would you like to visit?",
-        false,
-        exhibitions.map(ex => ex.name)
-      );
-    } else if (userMessage.includes("exhibition") || userMessage.includes("show")) {
-      addMessage(
-        "Here are our current featured exhibitions at Heritage Museum:",
-        false
-      );
-      // Add exhibition cards
-      setTimeout(() => {
-        addMessage(
-          "Which exhibition would you like to book?",
-          false,
-          exhibitions.map(ex => ex.name)
-        );
-      }, 500);
-    } else if (exhibitions.some(ex => userMessage.includes(ex.name.toLowerCase()))) {
-      const selectedEx = exhibitions.find(ex => userMessage.includes(ex.name.toLowerCase()));
-      addMessage(
-        `Excellent choice! ${selectedEx?.name} is one of our most popular exhibitions at Heritage Museum. How many tickets do you need?`,
-        false,
-        ["1 ticket", "2 tickets", "3-5 tickets", "Group booking (6+)"]
-      );
-    } else if (userMessage.includes("hours") || userMessage.includes("location")) {
-      addMessage(
-        "📍 Heritage Museum is open Tuesday-Sunday, 10 AM to 6 PM. We're located at 123 Culture Ave, easily accessible by public transport. Would you like directions or booking assistance?",
-        false,
-        ["Get directions", "Book tickets", "Check exhibitions"]
-      );
-    } else if (["1", "2", "3", "4", "5"].some(num => userMessage.includes(num))) {
-      addMessage(
-        "Perfect! When would you like to visit Heritage Museum?",
-        false,
-        ["Today", "Tomorrow", "This weekend", "Next week", "Choose specific date"]
-      );
-    } else if (userMessage.includes("today") || userMessage.includes("tomorrow") || userMessage.includes("weekend")) {
-      const bookingData = {
-        tickets: userMessage.includes("1") ? 1 : 2,
-        date: userMessage.includes("today") ? "Today" : userMessage.includes("tomorrow") ? "Tomorrow" : "This weekend",
-        price: 25
-      };
-      
-      addMessage(
-        `📋 Heritage Museum Booking Summary:\n• ${bookingData.tickets} ticket(s)\n• Date: ${bookingData.date}\n• Price: $${bookingData.price * bookingData.tickets}\n\nShall I proceed with secure payment?`,
-        false,
-        ["Proceed to payment", "Modify booking", "Add more tickets"],
-        bookingData
-      );
-    } else if (userMessage.includes("payment") || userMessage.includes("proceed")) {
-      addMessage(
-        "🔒 Redirecting to secure payment gateway... Please wait.",
-        false
-      );
-      setTimeout(() => {
-        // Navigate to payment page with booking data
-        window.location.href = '/payment';
-      }, 1500);
+  const processUserInput = (input: string) => {
+    switch (currentStep) {
+      case 'exhibition':
+        handleExhibitionSelection(input);
+        break;
+      case 'date':
+        handleDateSelection(input);
+        break;
+      case 'tickets':
+        handleTicketSelection(input);
+        break;
+      case 'confirm':
+        handleConfirmation(input);
+        break;
+    }
+  };
+
+  const handleExhibitionSelection = (input: string) => {
+    const matchedExhibition = exhibitions.find(ex => 
+      input.toLowerCase().includes(ex.toLowerCase())
+    );
+    
+    if (matchedExhibition || exhibitions.includes(input)) {
+      const exhibition = matchedExhibition || input;
+      setBookingData(prev => ({ ...prev, exhibition }));
+      addBotMessage(`Great choice! "${exhibition}" is one of our most popular exhibitions. When would you like to visit? (e.g., Today, Tomorrow, or a specific date)`, 1000);
+      setCurrentStep('date');
     } else {
-      // Default response
-      addMessage(
-        "I'm here to help with Heritage Museum bookings! You can ask me to book tickets, check exhibitions, or get information about our museum. What would you like to do?",
-        false,
-        quickActions
+      addBotMessage("I couldn't find that exhibition. Please choose from our current exhibitions:", 800, exhibitions);
+    }
+  };
+
+  const handleDateSelection = (input: string) => {
+    setBookingData(prev => ({ ...prev, date: input }));
+    addBotMessage(`Perfect! You've selected ${input}. How many tickets do you need?`, 1000, ["1", "2", "3", "4", "5+"]);
+    setCurrentStep('tickets');
+  };
+
+  const handleTicketSelection = (input: string) => {
+    const ticketCount = parseInt(input) || parseInt(input.match(/\d+/)?.[0] || '0');
+    
+    if (ticketCount > 0) {
+      setBookingData(prev => ({ ...prev, tickets: ticketCount }));
+      const price = 25; // Base price per ticket
+      const total = price * ticketCount;
+      
+      addBotMessage(
+        `📋 Booking Summary:\n\n🎨 Exhibition: ${bookingData.exhibition}\n📅 Date: ${bookingData.date}\n🎫 Tickets: ${ticketCount}\n💰 Total: $${total}\n\nDoes everything look correct?`,
+        1200,
+        ["Yes, confirm booking", "No, start over"]
       );
+      setCurrentStep('confirm');
+    } else {
+      addBotMessage("Please enter a valid number of tickets (e.g., 2)", 800);
+    }
+  };
+
+  const handleConfirmation = (input: string) => {
+    if (input.toLowerCase().includes('yes') || input.toLowerCase().includes('confirm')) {
+      setCurrentStep('processing');
+      addBotMessage("🔒 Processing your payment... Please wait.", 1000);
+      
+      setTimeout(() => {
+        addBotMessage("✅ Payment successful! Booking your tickets...", 2000);
+        
+        setTimeout(() => {
+          setCurrentStep('complete');
+          navigate('/success', { 
+            state: { 
+              bookingData: {
+                ...bookingData,
+                bookingId: `HM-${Math.floor(Math.random() * 10000)}`,
+                total: 25 * bookingData.tickets
+              }
+            } 
+          });
+        }, 3000);
+      }, 2000);
+    } else {
+      setCurrentStep('exhibition');
+      setBookingData({ exhibition: '', date: '', tickets: 0 });
+      addBotMessage("No problem! Let's start over. Which exhibition would you like to visit?", 1000, exhibitions);
     }
   };
 
@@ -250,23 +251,6 @@ const ChatBot = ({ selectedExhibition }: ChatBotProps) => {
                         </Button>
                       ))}
                     </div>
-                  )}
-
-                  {/* Booking Data Display */}
-                  {message.bookingData && (
-                    <Card className="mt-3">
-                      <CardContent className="p-3">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center space-x-2">
-                            <Ticket className="w-4 h-4 text-primary" />
-                            <span className="font-medium">Heritage Museum</span>
-                          </div>
-                          <Badge variant="secondary">
-                            ${message.bookingData.price * message.bookingData.tickets}
-                          </Badge>
-                        </div>
-                      </CardContent>
-                    </Card>
                   )}
 
                   <div className="flex items-center justify-between mt-2">
